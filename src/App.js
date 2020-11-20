@@ -35,11 +35,11 @@ export default class App extends Component{
     toggleTodo = (todo) => this.setState({
         todoItems: this.state.todoItems.map(item => item.action === todo.action ? {...item, done: !item.done} : item)
     });
-    todoTableRos = () => this.state.todoItems.map(item =>
+    todoTableRows = () => this.state.todoItems.map(item =>
         <tr key ={item.action}>
             <td>{item.action}</td>
             <td>
-                <input type="checkbox" checked = {item.done} onChange={this.toggleTodo()}/>
+                <input type="checkbox" checked = {item.done} onChange={() => this.toggleTodo(item)}/>
             </td>
         </tr>
     )
@@ -56,6 +56,12 @@ export default class App extends Component{
                     <input className={"form-control"} value={this.state.newItemText} onChange={(event => this.setState({newItemText: event.target.value}))}/>
                     <button className = "btn btn-primary mt-1" onClick={this.createNewTodo}>Dodaj</button>
                 </div>
+                <table className = "table table-striped table-bordered">
+                    <thead>
+                        <tr><th>Opis</th><th>Wykonane</th></tr>
+                    </thead>
+                    <tbody>{this.todoTableRows()}</tbody>
+                </table>
             </div>
         </div>
     )
